@@ -1,6 +1,7 @@
+### Acesse em : 
+https://pokedex-puce-zeta.vercel.app/
+
 ### Como rodar:
-
-
 
 Clona repositório:
 ```sh
