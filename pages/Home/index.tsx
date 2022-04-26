@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image'
 // import { Menu, Container } from './style';
 import Logo from '../../public/logo-pokedex.png'
-
 import  styled, {keyframes} from 'styled-components';
 
 const rotate = keyframes`

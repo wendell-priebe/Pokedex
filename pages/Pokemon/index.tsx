@@ -2,9 +2,9 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-// import { Title, SobCard, Card, Container, ContainerCards, Attributes, CardAttributes, PartsA, PartsB } from './style';
 
-import  styled, {keyframes} from 'styled-components';
+// import { Title, SobCard, Card, Container, ContainerCards, Attributes, CardAttributes, PartsA, PartsB } from './style';
+import  styled from 'styled-components';
 
  const Container = styled.section`
   background-color:#00aeff;
@@ -33,6 +33,22 @@ import  styled, {keyframes} from 'styled-components';
     font-size: 2rem;
     font-weight: 400;
     text-transform: uppercase;
+  }
+  div:last-child{
+    div{
+      background-color: #fff;
+      width: 40px;
+      height: 20px;
+      border-radius: 10px;
+
+      div{
+        width: 15px;
+        height: 15px;
+        margin: auto 3px;
+        background-color: #000;
+        cursor:pointer;
+      }
+    }
   }
 `;
 
@@ -226,18 +242,32 @@ interface Tipo{
   }
 }
 
+interface Status{
+    base_stat:number;
+    stat:{
+      name: string;
+    }
+}
+
 export default function Pokemon(  props : Props ){
   const [pokemon, setPokemon] = useState<Pokemon>();
+  const [status, setStatus] = useState<Status[]>();
   let name = props.name;
   if(props.name == ''){name = 'bulbasaur'};
 
-  let peso = pokemon?.height;
+  let peso = pokemon?.weight;
   if(peso == undefined ){peso = 0};
   let altura = pokemon?.height;
   if(altura == undefined ){altura = 0};
 
+  /* useEffect(()=>{
+    let estatus = [...pokemon?.stats];
+    setStatus([pokemon?.stats[0]])
+    console.log('estatus:', estatus)
+  },[pokemon]) */
 
   useEffect(() => {
+    setPokemon( undefined )
     const queryPokemon = `query pokemon($name: String!) {
       pokemon(name: $name) {
       id
@@ -247,7 +277,6 @@ export default function Pokemon(  props : Props ){
       weight
       stats {
         base_stat
-        effort
         stat {
           name
         }
@@ -274,7 +303,7 @@ export default function Pokemon(  props : Props ){
       }),
       method: 'POST',
     })
-      // .then(losg => setPokemon(  ) )
+      /* .then( losg => setPokemon( undefined ) ) */
       .then(res => res.json())
       .then(data => setPokemon(data.data.pokemon))
   },[name])
@@ -298,7 +327,13 @@ export default function Pokemon(  props : Props ){
             alt={`IMG ${pokemon?.name}`} 
           />
           </div>
-          <p>Butons</p>
+          <div>
+            <Image src='/sol.png' width={20} height={20} />
+            <div>
+              <div></div>
+            </div>
+            <Image src='/lua.png' width={20} height={20} />
+          </div>
         </Title>
 
         <ContainerCards>
@@ -388,24 +423,52 @@ export default function Pokemon(  props : Props ){
                 <strong>Attributes</strong>
               </p>
               <CardAttributes>
-                <Attributes>
-                  {pokemon?.stats?.[0].base_stat} {/* {pokemon?.stats?.[0].stat?.name} */} HP
-                </Attributes>
-                <Attributes>
-                  {/*{pokemon?.stats?.[5].base_stat} {/* {pokemon?.stats?.[5].stat?.name}  SPEED*/}
-                </Attributes>
-                <Attributes>
-                  {/*{pokemon?.stats?.[1].base_stat} {/* {pokemon?.stats?.[1].stat?.name}  ATK*/}
-                </Attributes>
-                <Attributes>
-                  {/*{pokemon?.stats?.[2].base_stat} {/* {pokemon?.stats?.[2].stat?.name}  DFF*/}
-                </Attributes>
-                <Attributes>
-                  {/*{pokemon?.stats?.[3].base_stat} {/* {pokemon?.stats?.[3].stat?.name}  SP. ATK.*/}
-                </Attributes>
-                <Attributes>
-                  {/*{pokemon?.stats?.[4].base_stat} {/* {pokemon?.stats?.[4].stat?.name}  SP. DEF.*/}
-                </Attributes>
+                {
+                  pokemon?.stats?.map((states: Status) =>{
+                      function color(cor: string) {
+                        switch(cor){
+                          case 'hp':
+                            return '#cc4946'
+                          case 'speed':
+                            return '#fd73cf'
+                          case 'attack':
+                            return 'orange'
+                          case 'defense':
+                            return '#ffc400'
+                          case 'special-attack':
+                            return '#4781ff'
+                          case 'special-defense': 
+                            return '#00ca00'
+                          default:
+                            return 'red';
+                        }
+                      }
+                      function name(name: string){
+                        switch(name){
+                          case 'hp':
+                            return 'HP'
+                          case 'speed':
+                            return 'SPEED'
+                          case 'attack':
+                            return 'ATK'
+                          case 'defense':
+                            return 'DEF'
+                          case 'special-attack':
+                            return 'SP. ATK.'
+                          case 'special-defense': 
+                            return 'SP. DEF.'
+                          default:
+                            return 'ERROR';
+                        }
+                      }
+                      return (
+                        <Attributes key={pokemon?.id} style={{background: color(states?.stat?.name)}}>
+                            {states?.base_stat} {name(states?.stat?.name)}
+                        </Attributes>
+                      )
+                    })
+                }
+
               </CardAttributes>
             </Card>
 
@@ -441,8 +504,9 @@ export default function Pokemon(  props : Props ){
               </p>
               <br />
               <p>
-                When an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived 
-                not only five centuries.
+                But also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the
+                1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like 
+                Aldus PageMaker including versions of Lorem Ipsum.
               </p>
               <br />
               <p>
@@ -450,6 +514,7 @@ export default function Pokemon(  props : Props ){
                 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like 
                 Aldus PageMaker including versions of Lorem Ipsum.
               </p>
+              
             </Card>
           </PartsB>
 

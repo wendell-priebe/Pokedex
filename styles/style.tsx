@@ -158,9 +158,9 @@ export const PartsB = styled.div`
     align-items: flex-start;
     align-content: flex-start;
 
-     strong{
-      padding: 10px 10px;
-     }
+    strong{
+    padding: 10px 10px;
+    }
     div{
       display: flex;
       flex-direction: column;
