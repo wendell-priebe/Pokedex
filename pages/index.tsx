@@ -38,7 +38,7 @@ const Home: NextPage = (  ) => {
       <Login>
         <form onSubmit={function(infosDoEvento){
           infosDoEvento.preventDefault();
-          router.push(`/components/Home`);
+          router.push(`/Home`);
         }}>
           <Image 
             src={Pokebola}
