@@ -71,7 +71,7 @@ const Home: NextPage = (  ) => {
     const filtered =
       !pokemons || !s
         ? pokemons
-        : pokemons.filter(({ id, name }) =>
+        : pokemons.filter(({ name }) =>
             name.toLowerCase().includes(s)
           );
 
