@@ -12,9 +12,9 @@ cd pokedex
 ```
 Instala as dependencias:
 ```sh 
-yarn
+npm install
 ```
 Roda como desenvolvedor:
 ```sh 
-yarn run dev
+npm run dev
 ```

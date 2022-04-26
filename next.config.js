@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     domains: ['raw.githubusercontent.com', 'hostname'],
   },
+  pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts', 'components/Pokemon/index.tsx', 'components.Home.index.tsx', 'style.tsx'],
 }
 
 module.exports = nextConfig
