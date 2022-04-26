@@ -7,6 +7,9 @@ import { Menu, Container } from './style';
 import Logo from '../../../public/logo-pokedex.png'
 
 interface Pokemons {
+  name: string
+  id: number
+  
   pokemons:{
     id: number;
     image: string;

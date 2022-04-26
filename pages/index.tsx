@@ -10,13 +10,15 @@ import Logo from '../public/logo-pokedex.png'
 import Settings from '../public/settings.svg'
 
 interface Email {
-  email: string;
+  email: string ;
 }
 
 const Home: NextPage = (  ) => {
-  const [email , setEmail] = useState<Email>( '' );
+  const [email , setEmail] = useState<Email>( {email : ''} );
+  let str = new String(email);
   const router = useRouter();
-
+  let verifi = str.length < 10;
+  
   return (
     <>
       <Header>
@@ -24,7 +26,6 @@ const Home: NextPage = (  ) => {
           <Image 
             src={Logo} 
             alt="Logo"
-
           />
           <Image 
             src={Settings} 
@@ -47,14 +48,15 @@ const Home: NextPage = (  ) => {
             height={120}
           />
           <input 
-            email="email"
+            // email="email"
             type="email"
             placeholder="Seu melhor email" 
-            onChange={(infosDoEvento)=>{setEmail(infosDoEvento.target.value)}}
-            value={email}
+            // onChange={(infosDoEvento)=>{setEmail(infosDoEvento.target.value)}}
+            // value={email}
           />
-          <button type="submit" disabled={email.length < 10}>
-            Acessar com {email}
+          <button type="submit" disabled={verifi}>
+            Acessar
+            {/* Acessar com {email} */}
           </button>
         </form>
       </Login>
